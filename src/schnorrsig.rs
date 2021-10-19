@@ -20,6 +20,12 @@ pub struct Signature([u8; constants::SCHNORRSIG_SIGNATURE_SIZE]);
 impl_array_newtype!(Signature, u8, constants::SCHNORRSIG_SIGNATURE_SIZE);
 impl_pretty_debug!(Signature);
 
+impl std::hash::Hash for Signature {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        self.0.hash(state)
+    }
+}
+
 #[cfg(feature = "serde")]
 impl ::serde::Serialize for Signature {
     fn serialize<S: ::serde::Serializer>(&self, s: S) -> Result<S::Ok, S::Error> {
